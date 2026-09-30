@@ -1,0 +1,1 @@
+scenario=longctx name=B1_r3 tok_s=15.39 NLL=0.1776 hit=97.8 log=$HOME/qwfn/QwFN-hybrid/bench/evidence/raw/final3/logs/longctx.B1_r3.log

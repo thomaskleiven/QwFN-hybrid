@@ -1,0 +1,66 @@
+## date
+2026-09-29T19:04:47+02:00
+## kernel
+Linux HOST 7.0.0-31-generic #31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+## os
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+## cpu
+CPU(s):                                  20
+Model name:                              Intel(R) Core(TM) Ultra 7 265F
+Thread(s) per core:                      1
+Core(s) per socket:                      20
+Socket(s):                               1
+CPU(s) scaling MHz:                      63%
+CPU max MHz:                             6500.0000
+CPU min MHz:                             800.0000
+Flags: (see below)
+L2 cache:                                36 MiB (11 instances)
+L3 cache:                                30 MiB (1 instance)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-19
+## cpu flags
+avx avx2 avx_vnni f16c fma 
+## hybrid cores
+cpu_core: 0-7
+cpu_atom: 8-19
+## memory
+               total        used        free      shared  buff/cache   available
+Mem:     33273667584  4107202560 28662075392    68898816  1042829312 29166465024
+Swap:     8589930496  6448238592  2141691904
+MemTotal:       32493816 kB
+SwapTotal:       8388604 kB
+## gpu
+name, memory.total [MiB], driver_version, pcie.link.gen.current, pcie.link.width.current, pcie.link.gen.max, pcie.link.width.max
+NVIDIA GeForce RTX 5060 Ti, 16311 MiB, 580.178.04, 4, 8, 4, 16
+0000:02:00.0: 16.0 GT/s PCIe x8 (max 32.0 GT/s PCIe x16)
+0000:02:00.1: 16.0 GT/s PCIe x8 (max 32.0 GT/s PCIe x16)
+## cuda
+Cuda compilation tools, release 13.0, V13.0.88
+Build cuda_13.0.r13.0/compiler.36424714_0
+## compiler
+gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+cmake version 3.28.3
+## storage
+NAME    MODEL                        SIZE ROTA TRAN
+nvme0n1 SAMSUNG MZVL82T0HBL1-00BH1   1.9T    0 nvme
+SAMSUNG MZVL82T0HBL1-00BH1               fw HPS1NKXG
+## filesystem of the model
+TARGET FSTYPE OPTIONS
+/      ext4   rw,relatime
+## cpufreq
+powersave
+balance_performance
+## models
+-rw-rw-r-- 1 user user 2786568256 Sep 28 08:02 $HOME/models/qwen38-flash-next/MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf
+
+$HOME/models/qwen38-flash-next/IQ3_XXS:
+total 74062544
+-rw-rw-r-- 1 user user 47039860096 Sep 27 17:33 Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00001-of-00002.gguf
+-rw-rw-r-- 1 user user 28800138432 Sep 27 18:18 Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00002-of-00002.gguf
+## sha256
+219ea929900dfa9ef091f3aa473fdba6874b65fcb36526d7d851ac9e95856d15  $HOME/models/qwen38-flash-next/IQ3_XXS/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00001-of-00002.gguf
+316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113  $HOME/models/qwen38-flash-next/IQ3_XXS/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00002-of-00002.gguf
+5ff54097406a905cf3a724c709124ceb0e3e10235ee862298969e91c96fa96e6  $HOME/models/qwen38-flash-next/MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf

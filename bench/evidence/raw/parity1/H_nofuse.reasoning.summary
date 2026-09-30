@@ -1,0 +1,1 @@
+scenario=reasoning name=H_nofuse tok_s=22.20 NLL=0.4418 hit=98.3 log=bench/evidence/raw/parity1/logs/reasoning.H_nofuse.log

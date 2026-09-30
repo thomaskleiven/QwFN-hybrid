@@ -1,0 +1,1 @@
+scenario=reasoning3k name=A tok_s=12.67 NLL=0.3727 hit=99.2 log=bench/evidence/raw/longreason/logs/reasoning3k.A.log

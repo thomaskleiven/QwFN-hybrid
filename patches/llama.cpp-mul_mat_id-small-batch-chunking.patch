@@ -1,0 +1,28 @@
+diff --git a/ggml/src/ggml-cpu/ggml-cpu.c b/ggml/src/ggml-cpu/ggml-cpu.c
+index 87a329f26..b5ffae1fc 100644
+--- a/ggml/src/ggml-cpu/ggml-cpu.c
++++ b/ggml/src/ggml-cpu/ggml-cpu.c
+@@ -1687,6 +1687,14 @@ static void ggml_compute_forward_mul_mat_id(
+         if (nr0 == 1 || nr1 == 1) {
+             chunk_size = 64;
+         }
++        // qwfn-hybrid: an MoE decode step routes 1-2 columns to an expert. With 64-row
++        // chunks a 640-row gate/up had fewer chunks than 4*nth and fell back to one
++        // static slice per thread, no stealing: the slowest core set the time.
++        // 16-row chunks with atomic stealing; rows are independent, results identical.
++        const bool small_batch = nr1 <= 2 && nr0 >= 16 * nth;
++        if (small_batch) {
++            chunk_size = 16;
++        }
+ 
+         // disable for NUMA
+         const bool disable_chunking = ggml_is_numa();
+@@ -1694,7 +1702,7 @@ static void ggml_compute_forward_mul_mat_id(
+         int64_t nchunk0 = (nr0 + chunk_size - 1) / chunk_size;
+         int64_t nchunk1 = (nr1 + chunk_size - 1) / chunk_size;
+ 
+-        if (nchunk0 * nchunk1 < nth * 4 || disable_chunking) {
++        if ((nchunk0 * nchunk1 < nth * 4 && !small_batch) || disable_chunking) {
+             nchunk0 = nr0 > nr1 ? nth : 1;
+             nchunk1 = nr0 > nr1 ? 1 : nth;
+         }

@@ -1,0 +1,37 @@
+[qwfn] direct I/O: 512-byte slots, page-aligned reads through a bounce buffer (slice strides are not page multiples)
+ggml_cuda_init: found 1 CUDA devices (Total VRAM: 15847 MiB):
+  Device 0: NVIDIA GeForce RTX 5060 Ti, compute capability 12.0, VMM: yes, VRAM: 15847 MiB
+[qwfn] CPU threadpool: 5 threads, poll 50, cpus 0-7
+ (pinned)
+[qwfn] decode QSA state: 57.5 MB (pooled block keys for 18432 blocks, 513 kept)
+[qwfn] prefill VRAM (dynamic, lent by the expert tier): 7.66 GB; decode reserve 1153 MB
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 12495.74 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 11991.03 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 11501.90 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 11055.66 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 10625.97 MiB on device 0: cudaMalloc failed: out of memory
+[qwfn] expert VRAM tier: 9.55 GB, 5686 blocks (23.1%), of which 39 layers (7395 MiB) are handed to the prefill
+[qwfn] expert RAM tier: 18.94 GB arena (pinned), 11258 of 24576 expert blocks (45.8%)
+[qwfn] prefill streamer: host 2 x 1.19 GB (pinned), device 1.19 GB (device, allocated per prefill), 16 MB chunks, read-ahead on
+dense core 3.84271 GB on CUDA0 | state @ 73728 ctx: KV 0.962593 GB (q8_0), indexer 0.226492 GB, deltanet 113.246 MB (constant), conv 4.79232 MB  =>  total 1.30712 GB on the device | expert cache 11258 RAM blocks, 5686 VRAM blocks
+
+prefill: 512 tokens in 10.69 s  (47.9 tok/s)
+generated: 248046 198 248045 74455 198 248068 198 760 1156 682 5904 264 351 992 2450 999 1510 3431 32773 86 8556 13808 517 11198 6982 27653 2302 8719 914 4439 264 3050 3296 883 424 13 6558 728 1353 506 1092 579 3766 321 3655 364 836 3296 11 466 3300 264 5222 6157 314 279 1970 13 271 50821 11 3221 777 15060 11 279 1156 1066 3162 290 264 999 1973 866 11135 3296 13 353 1220 23868 279 999 321 2915 310 1438 440 424 11 466 3300 264 11782 14 33340 314 1092 279 1970 1503 13 271 9764 728 22903 279 1970 25 271 16 13 1049 579 264 351 992 999 24141 449 328 71376 6297 1 364 1092 7701 310 381
+
+decode: 128 tokens in 8.02 s  (15.96 tok/s), n_past=640
+cached graph replays: 6096; per replay alloc 0 us, launch 12 us, wait 531 us
+step profile: eval 7.94 s = pre 0.06 + graphA 3.76 + CPU MoE 1.89 + io 2.04 + head 0.17 + rest 0.02 | draft head 0.00 s
+expert cache: 98.0% hit, 84.5% from VRAM, 37.18 GB from disk
+              tiers: 7016 promotions, 5435 RAM evictions, 0 cold-file reads, 0 upgrades
+              RAM tier at end: 11258 slots = 11206 hot + 0 cold (0 of them hot-worthy) + 52 empty; 615 prefetched unused, 0 in flight; 0 experts marked hot-worthy
+decode split: graphA(GPU) 3.76 s | MoE gpu 0.24 s (67193 experts, sync-wait 0.00 s) | MoE cpu 1.89 s (9508 experts) | io 11.60 s
+              per expert: gpu 4 us, cpu 199 us  (55.7x)
+              graphA per decode layer: recurrent 530 us (x4608), attention 600 us (x1536) [attention: build+alloc 0 us, gpu 0 us; per-token inputs 32 us]
+prefetch: 84.3% of the next layer's experts predicted correctly | 4410 issued, 3741 used (84.8%), 54 wasted
+prediction by rank, precision %: r1 99 r2 98 r3 97 r4 95 r5 92 r6 88 r7 83 r8 74 r9 65 r10 51 r11 36 r12 23 r13 17 r14 12 r15 9 r16 7
+prediction by margin [edge+) P(correct)% / share%: [0) 40/10.5 [0.05) 39/10.6 [0.1) 40/18.5 [0.2) 44/14.0 [0.3) 60/16.4 [0.5) 83/11.3 [0.75) 93/7.3 [1) 98/7.9 [1.5) 99/2.7 [2) 100/0.7 [3) 90/0.0
+prediction by layer, worst 10: L1 43 L47 67 L3 73 L31 76 L2 77 L15 78 L37 79 L36 79 L17 82 L5 82  | best: L43 93
+io breakdown: submit 0.02 s, promote 0.03 s, wait 1.99 s | 887 bursts, 49536 reads, 55.8 reads/burst, 733 KiB/read
+             wait-only bandwidth: 18.70 GB/s   (device peak measured 7.0 GB/s)
+             io_engine: backend=threads, O_DIRECT=1, 49536 reads, 29.14 GB actually read, prep 0.02 s, io_uring_submit 0.00 s
+engine time: prefill 10.69 s / 512 tok, decode 7.94 s / 128 tok, expert io 11.60 s

@@ -1,0 +1,1 @@
+scenario=reasoning name=D_r2 tok_s=21.31 NLL=0.4438 hit=98.4 log=$HOME/qwfn/QwFN-hybrid/bench/evidence/raw/final4/logs/reasoning.D_r2.log

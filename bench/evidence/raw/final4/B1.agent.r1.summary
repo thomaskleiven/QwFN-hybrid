@@ -1,0 +1,1 @@
+scenario=agent name=B1_r1 tok_s=16.44 NLL=0.1536 hit=97.8 log=$HOME/qwfn/QwFN-hybrid/bench/evidence/raw/final3/logs/agent.B1_r1.log

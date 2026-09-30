@@ -1,0 +1,33 @@
+QwFN-hybrid
+Copyright 2026 the QwFN-hybrid contributors
+
+This product is a modified version of QwFNfer (https://github.com/Apolog1ze-Dev/QwFNfer),
+licensed under the Apache License, Version 2.0 (see LICENSE). Its baseline (called 2d6837f in the
+evidence) is upstream master f955dbf with upstream PRs #10, #12 and #14 merged and two I/O fixes
+(bench/qwfn-ref-instrument.patch applies to it). Everything beyond that baseline is this fork's work.
+
+Files modified relative to the baseline (Apache-2.0 section 4(b)):
+  CMakeLists.txt             tool targets added/removed, portable-bundle option removed
+  src/qwfn_engine.cpp/.h     CPU expert path (routed pairs, host reduce), readback pack for every
+                             verify width, late-fold row width fix, session snapshots,
+                             pipelined short-prompt (cbatch) prefill, batched decode-attention
+                             projections, persistent per-step graph contexts, deferred prefetch
+  src/qwfn_graph.cpp/.h      decode attention: batched projections, raw q8_0 K/V gather into
+                             flash attention; contiguous DeltaNet conv concat
+  src/qwfn_expert_cache.cpp/.h  fetch_batch split into begin/end for pipelining
+  src/qwfn_weights.cpp/.h    persistent ggml CPU threadpool (caller affinity preserved)
+  tools/qwfn_gen.cpp         argmax in per-token NLL output, top-k dump, step profile
+  tools/qwfn_server.cpp      saved-sequence store and shared-prefix checkpoints; draft defaults
+New files:
+  tools/llama_nll.cpp, tools/qwfn_snaptest.cpp, bench/* (incl. make_mtp_q4.sh), docs/PARITY.md,
+  docs/DECISIONS.md
+Removed from upstream: the console, installer/packaging scripts, the Claude Desktop launcher and
+  router, the predictor-training and I/O experiment tools, qwfn-run, upstream docs and images.
+
+Third-party components (not modified here unless stated):
+  ggml / llama.cpp (MIT License, Copyright (c) 2023-2026 The ggml authors): used as the kernel
+    library, tokenizer and parity reference. One patch is carried in patches/ (ggml-cpu
+    mul_mat_id work stealing for 1-2 column batches); it is distributed under the MIT License.
+  cpp-httplib and nlohmann/json (MIT) are compiled from llama.cpp's vendor/ tree by the server.
+
+Model weights are not part of this repository and are subject to their own licenses.

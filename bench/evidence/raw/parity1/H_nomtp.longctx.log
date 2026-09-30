@@ -1,0 +1,343 @@
+[qwfn] direct I/O: 512-byte slots, page-aligned reads through a bounce buffer (slice strides are not page multiples)
+ggml_cuda_init: found 1 CUDA devices (Total VRAM: 15847 MiB):
+  Device 0: NVIDIA GeForce RTX 5060 Ti, compute capability 12.0, VMM: yes, VRAM: 15847 MiB
+[qwfn] CPU threadpool: 5 threads, poll 50, cpus 0-7
+ (pinned)
+[qwfn] prefetch: speculative block on (0 of 47 predicted layers), margin gate off
+[qwfn] decode QSA state: 57.5 MB (pooled block keys for 18432 blocks, 513 kept)
+[qwfn] prefill VRAM (dynamic, lent by the expert tier): 5.31 GB; decode reserve 1153 MB
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 12495.74 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 11991.03 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 11501.90 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 11055.66 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 10625.97 MiB on device 0: cudaMalloc failed: out of memory
+[qwfn] expert VRAM tier: 9.55 GB, 5686 blocks (23.1%), of which 27 layers (5109 MiB) are handed to the prefill
+[qwfn] expert RAM tier: 18.94 GB arena (pinned), 11258 of 24576 expert blocks (45.8%)
+[qwfn] prefill streamer: host 2 x 1.19 GB (pinned), device 1.19 GB (device, allocated per prefill), 16 MB chunks, read-ahead on
+[nll] #1 tok 27775: 0.031003 argmax 27775
+dense core 3.84271 GB on CUDA0 | state @ 73728 ctx: KV 0.962593 GB (q8_0), indexer 0.226492 GB, deltanet 113.246 MB (constant), conv 4.79232 MB  =>  total 1.30712 GB on the device | expert cache 11258 RAM blocks, 5686 VRAM blocks
+
+prefill: 21289 tokens in 50.68 s  (420.1 tok/s)
+replaying: 27775[nll] #2 tok 383: 0.003987 argmax 383
+ 383[nll] #3 tok 279: 0.006233 argmax 279
+ 279[nll] #4 tok 3766: 0.203444 argmax 3766
+ 3766[nll] #5 tok 2450: 0.005576 argmax 2450
+ 2450[nll] #6 tok 999: 0.556928 argmax 999
+ 999[nll] #7 tok 11: 0.580771 argmax 11
+ 11[nll] #8 tok 1532: 0.100322 argmax 1532
+ 1532[nll] #9 tok 369: 0.000896 argmax 369
+ 369[nll] #10 tok 1204: 0.139106 argmax 1204
+ 1204[nll] #11 tok 279: 0.001475 argmax 279
+ 279[nll] #12 tok 21360: 0.263663 argmax 21360
+ 21360[nll] #13 tok 25165: 0.019124 argmax 25165
+ 25165[nll] #14 tok 38587: 0.750272 argmax 38587
+ 38587[nll] #15 tok 449: 0.518136 argmax 449
+ 449[nll] #16 tok 75555: 0.000297 argmax 75555
+ 75555[nll] #17 tok 11397: 0.003215 argmax 11397
+ 11397[nll] #18 tok 321: 0.000650 argmax 321
+ 321[nll] #19 tok 1204: 0.000167 argmax 1204
+ 1204[nll] #20 tok 279: 0.711105 argmax 279
+ 279[nll] #21 tok 21360: 0.554786 argmax 21360
+ 21360[nll] #22 tok 4534: 0.000082 argmax 4534
+ 4534[nll] #23 tok 12: 0.001293 argmax 12
+ 12[nll] #24 tok 18232: 0.000427 argmax 18232
+ 18232[nll] #25 tok 1354: 0.006064 argmax 1354
+ 1354[nll] #26 tok 19633: 0.003141 argmax 19633
+ 19633[nll] #27 tok 11870: 0.381085 argmax 11870
+ 11870[nll] #28 tok 26731: 0.636998 argmax 26731
+ 26731[nll] #29 tok 3315: 0.322111 argmax 3315
+ 3315[nll] #30 tok 310: 0.000797 argmax 310
+ 310[nll] #31 tok 8032: 0.051822 argmax 8032
+ 8032[nll] #32 tok 264: 0.036501 argmax 264
+ 264[nll] #33 tok 18394: 0.007080 argmax 18394
+ 18394[nll] #34 tok 6009: 0.074922 argmax 6009
+ 6009[nll] #35 tok 13: 0.051068 argmax 13
+ 13[nll] #36 tok 271: 0.005008 argmax 271
+ 271[nll] #37 tok 13962: 0.002381 argmax 13962
+ 13962[nll] #38 tok 220: 0.015357 argmax 220
+ 220[nll] #39 tok 16: 0.000151 argmax 16
+ 16[nll] #40 tok 13: 0.006507 argmax 13
+ 13[nll] #41 tok 21360: 0.028071 argmax 21360
+ 21360[nll] #42 tok 34065: 0.035494 argmax 34065
+ 34065[nll] #43 tok 10114: 0.026507 argmax 10114
+ 10114[nll] #44 tok 2399: 0.002724 argmax 2399
+ 2399[nll] #45 tok 89823: 0.081064 argmax 89823
+ 89823[nll] #46 tok 23389: 0.026729 argmax 23389
+ 23389[nll] #47 tok 271: 0.056638 argmax 271
+ 271[nll] #48 tok 760: 0.016916 argmax 760
+ 760[nll] #49 tok 709: 0.434334 argmax 709
+ 709[nll] #50 tok 8220: 0.394621 argmax 8220
+ 8220[nll] #51 tok 364: 0.002087 argmax 364
+ 364[nll] #52 tok 25460: 0.340889 argmax 25460
+ 25460[nll] #53 tok 264: 0.767223 argmax 264
+ 264[nll] #54 tok 11397: 0.081408 argmax 11397
+ 11397[nll] #55 tok 303: 1.127678 argmax 303
+ 303[nll] #56 tok 279: 0.001565 argmax 279
+ 279[nll] #57 tok 21360: 0.009357 argmax 21360
+ 21360[nll] #58 tok 25165: 0.020010 argmax 25165
+ 25165[nll] #59 tok 369: 0.023355 argmax 369
+ 369[nll] #60 tok 2972: 0.048451 argmax 2972
+ 2972[nll] #61 tok 63: 0.001028 argmax 63
+ 63[nll] #62 tok 71376: 0.492288 argmax 71376
+ 71376[nll] #63 tok 11198: 0.001818 argmax 11198
+ 11198[nll] #64 tok 476: 0.000356 argmax 476
+ 476[nll] #65 tok 26184: 0.003394 argmax 26184
+ 26184[nll] #66 tok 2200: 0.002065 argmax 2200
+ 2200[nll] #67 tok 49423: 0.001180 argmax 49423
+ 49423[nll] #68 tok 63: 0.039824 argmax 63
+ 63[nll] #69 tok 159034: 0.013209 argmax 159034
+ 159034[nll] #70 tok 271: 0.014977 argmax 271
+ 271[nll] #71 tok 332: 0.400770 argmax 332
+ 332[nll] #72 tok 55157: 0.507105 argmax 55157
+ 55157[nll] #73 tok 65526: 0.007832 argmax 65526
+ 65526[nll] #74 tok 64700: 0.009666 argmax 64700
+ 64700[nll] #75 tok 198: 0.002957 argmax 198
+ 198[nll] #76 tok 16: 0.603077 argmax 16
+ 16[nll] #77 tok 13: 0.001264 argmax 13
+ 13[nll] #78 tok 220: 0.000873 argmax 220
+ 220[nll] #79 tok 2972: 0.003111 argmax 2972
+ 2972[nll] #80 tok 95215: 0.966104 argmax 95215
+ 95215[nll] #81 tok 64700: 0.120465 argmax 64700
+ 64700[nll] #82 tok 1049: 0.336498 argmax 1049
+ 1049[nll] #83 tok 1503: 0.911552 argmax 1503
+ 1503[nll] #84 tok 524: 0.001419 argmax 524
+ 524[nll] #85 tok 8307: 0.020187 argmax 8307
+ 8307[nll] #86 tok 660: 0.157954 argmax 660
+ 660[nll] #87 tok 15250: 0.006470 argmax 15250
+ 15250[nll] #88 tok 13: 0.214601 argmax 13
+ 13[nll] #89 tok 11746: 0.052776 argmax 11746
+ 11746[nll] #90 tok 11: 0.005229 argmax 11
+ 11[nll] #91 tok 424: 0.000196 argmax 424
+ 424[nll] #92 tok 10156: 0.024069 argmax 10156
+ 10156[nll] #93 tok 1510: 0.258489 argmax 1510
+ 1510[nll] #94 tok 13669: 0.002496 argmax 13669
+ 13669[nll] #95 tok 4790: 0.002992 argmax 4790
+ 4790[nll] #96 tok 4958: 0.001145 argmax 4958
+ 4958[nll] #97 tok 823: 0.000608 argmax 823
+ 823[nll] #98 tok 17752: 0.003689 argmax 17752
+ 17752[nll] #99 tok 63: 0.014713 argmax 63
+ 63[nll] #100 tok 4055: 0.984730 argmax 4055
+ 4055[nll] #101 tok 15250: 0.167543 argmax 15250
+ 15250[nll] #102 tok 1608: 0.249092 argmax 1608
+ 1608[nll] #103 tok 264: 0.213753 argmax 264
+ 264[nll] #104 tok 4368: 0.541766 argmax 4368
+ 4368[nll] #105 tok 38729: 0.004659 argmax 38729
+ 38729[nll] #106 tok 1510: 1.086022 argmax 52131
+ 1510[nll] #107 tok 68890: 0.002174 argmax 68890
+ 68890[nll] #108 tok 13031: 0.004820 argmax 13031
+ 13031[nll] #109 tok 63: 0.022483 argmax 63
+ 63[nll] #110 tok 70141: 0.671827 argmax 70141
+ 70141[nll] #111 tok 13: 0.081503 argmax 13
+ 13[nll] #112 tok 198: 0.268729 argmax 198
+ 198[nll] #113 tok 17: 0.003225 argmax 17
+ 17[nll] #114 tok 13: 0.000677 argmax 13
+ 13[nll] #115 tok 220: 0.010404 argmax 220
+ 220[nll] #116 tok 2972: 0.000764 argmax 2972
+ 2972[nll] #117 tok 6374: 1.499395 argmax 6374
+ 6374[nll] #118 tok 339: 0.001717 argmax 339
+ 339[nll] #119 tok 3047: 0.000844 argmax 3047
+ 3047[nll] #120 tok 4109: 0.419028 argmax 4109
+ 4109[nll] #121 tok 27718: 0.436390 argmax 27718
+ 27718[nll] #122 tok 258: 0.000369 argmax 258
+ 258[nll] #123 tok 87262: 0.008898 argmax 87262
+ 87262[nll] #124 tok 63: 0.003062 argmax 63
+ 63[nll] #125 tok 12102: 0.571981 argmax 12102
+ 12102[nll] #126 tok 188912: 0.001881 argmax 188912
+ 188912[nll] #127 tok 12851: 0.620454 argmax 12851
+ 12851[nll] #128 tok 12463: 0.314822 argmax 12463
+ 12463[nll] #129 tok 264: 0.005137 argmax 264
+ 264[nll] #130 tok 9167: 0.125208 argmax 9167
+ 9167[nll] #131 tok 11: 0.335652 argmax 11
+ 11[nll] #132 tok 424: 0.011502 argmax 424
+ 424[nll] #133 tok 11988: 0.192496 argmax 11988
+ 11988[nll] #134 tok 413: 0.017888 argmax 413
+ 413[nll] #135 tok 279: 0.377481 argmax 279
+ 279[nll] #136 tok 9167: 0.003103 argmax 9167
+ 9167[nll] #137 tok 369: 0.000886 argmax 369
+ 369[nll] #138 tok 328: 0.189335 argmax 328
+ 328[nll] #139 tok 258: 0.013711 argmax 258
+ 258[nll] #140 tok 10650: 0.043880 argmax 10650
+ 10650[nll] #141 tok 1149: 0.647586 argmax 1149
+ 1149[nll] #142 tok 357: 0.016609 argmax 357
+ 357[nll] #143 tok 9167: 0.000358 argmax 9167
+ 9167[nll] #144 tok 369: 0.000555 argmax 369
+ 369[nll] #145 tok 92502: 0.688736 argmax 92502
+ 92502[nll] #146 tok 413: 0.023530 argmax 413
+ 413[nll] #147 tok 25: 0.000985 argmax 25
+ 25[nll] #148 tok 198: 0.004561 argmax 198
+ 198[nll] #149 tok 262: 0.002259 argmax 262
+ 262[nll] #150 tok 348: 0.000298 argmax 348
+ 348[nll] #151 tok 256: 0.002491 argmax 256
+ 256[nll] #152 tok 1049: 0.073684 argmax 1049
+ 1049[nll] #153 tok 682: 0.696944 argmax 682
+ 682[nll] #154 tok 449: 0.205214 argmax 449
+ 449[nll] #155 tok 6009: 0.365452 argmax 6009
+ 6009[nll] #156 tok 2937: 0.400805 argmax 2937
+ 2937[nll] #157 tok 12244: 0.166998 argmax 12244
+ 12244[nll] #158 tok 694: 0.207967 argmax 694
+ 694[nll] #159 tok 1510: 0.106314 argmax 1510
+ 1510[nll] #160 tok 20877: 0.004465 argmax 20877
+ 20877[nll] #161 tok 8078: 0.000145 argmax 8078
+ 8078[nll] #162 tok 63: 0.028294 argmax 63
+ 63[nll] #163 tok 369: 0.000040 argmax 369
+ 369[nll] #164 tok 220: 0.232956 argmax 220
+ 220[nll] #165 tok 15: 0.000069 argmax 15
+ 15[nll] #166 tok 318: 0.000284 argmax 318
+ 318[nll] #167 tok 851: 0.394481 argmax 851
+ 851[nll] #168 tok 14213: 0.563563 argmax 14213
+ 14213[nll] #169 tok 694: 0.033844 argmax 694
+ 694[nll] #170 tok 524: 0.000899 argmax 524
+ 524[nll] #171 tok 311: 0.470658 argmax 311
+ 311[nll] #172 tok 9882: 0.003100 argmax 9882
+ 9882[nll] #173 tok 553: 0.028988 argmax 553
+ 553[nll] #174 tok 198: 0.001551 argmax 198
+ 198[nll] #175 tok 262: 0.003768 argmax 262
+ 262[nll] #176 tok 348: 0.004960 argmax 348
+ 348[nll] #177 tok 256: 0.008303 argmax 256
+ 256[nll] #178 tok 1049: 0.056647 argmax 1049
+ 1049[nll] #179 tok 369: 0.018543 argmax 369
+ 369[nll] #180 tok 4862: 0.274724 argmax 4862
+ 4862[nll] #181 tok 1602: 0.960758 argmax 1602
+ 1602[nll] #182 tok 1429: 0.364294 argmax 1429
+ 1429[nll] #183 tok 539: 0.190438 argmax 539
+ 539[nll] #184 tok 279: 0.065853 argmax 279
+ 279[nll] #185 tok 4393: 0.667134 argmax 4393
+ 4393[nll] #186 tok 1510: 0.296990 argmax 1510
+ 1510[nll] #187 tok 9353: 0.040351 argmax 9353
+ 9353[nll] #188 tok 63: 0.413684 argmax 63
+ 63[nll] #189 tok 5488: 0.535535 argmax 5488
+ 5488[nll] #190 tok 318: 0.359364 argmax 318
+ 318[nll] #191 tok 56415: 0.491719 argmax 56415
+ 56415[nll] #192 tok 303: 0.074109 argmax 303
+ 303[nll] #193 tok 1510: 0.242553 argmax 1510
+ 1510[nll] #194 tok 24037: 0.001254 argmax 24037
+ 24037[nll] #195 tok 62: 0.006196 argmax 62
+ 62[nll] #196 tok 57208: 0.013867 argmax 57208
+ 57208[nll] #197 tok 198: 0.005921 argmax 198
+ 198[nll] #198 tok 262: 0.002526 argmax 262
+ 262[nll] #199 tok 348: 0.001621 argmax 348
+ 348[nll] #200 tok 256: 0.004696 argmax 256
+ 256[nll] #201 tok 1049: 0.004770 argmax 1049
+ 1049[nll] #202 tok 369: 0.009828 argmax 369
+ 369[nll] #203 tok 6197: 1.253252 argmax 6197
+ 6197[nll] #204 tok 303: 0.000498 argmax 303
+ 303[nll] #205 tok 449: 0.476267 argmax 449
+ 449[nll] #206 tok 37715: 0.011413 argmax 37715
+ 37715[nll] #207 tok 19633: 0.163207 argmax 19633
+ 19633[nll] #208 tok 27718: 1.504505 argmax 14836
+ 27718[nll] #209 tok 27293: 0.000266 argmax 27293
+ 27293[nll] #210 tok 23801: 0.000882 argmax 23801
+ 23801[nll] #211 tok 62: 0.004934 argmax 62
+ 62[nll] #212 tok 57208: 0.023647 argmax 57208
+ 57208[nll] #213 tok 198: 0.003257 argmax 198
+ 198[nll] #214 tok 262: 0.589631 argmax 262
+ 262[nll] #215 tok 348: 0.002385 argmax 348
+ 348[nll] #216 tok 256: 0.000671 argmax 256
+ 256[nll] #217 tok 1049: 0.022140 argmax 1049
+ 1049[nll] #218 tok 369: 0.001120 argmax 369
+ 369[nll] #219 tok 46120: 0.780194 argmax 46120
+ 46120[nll] #220 tok 27718: 0.006327 argmax 27718
+ 27718[nll] #221 tok 20877: 0.050666 argmax 20877
+ 20877[nll] #222 tok 605: 0.000070 argmax 605
+ 605[nll] #223 tok 19936: 0.000452 argmax 19936
+ 19936[nll] #224 tok 57208: 0.117754 argmax 57208
+ 57208[nll] #225 tok 198: 0.001257 argmax 198
+ 198[nll] #226 tok 18: 0.018050 argmax 18
+ 18[nll] #227 tok 13: 0.000596 argmax 13
+ 13[nll] #228 tok 220: 0.011191 argmax 220
+ 220[nll] #229 tok 2972: 0.001605 argmax 2972
+ 2972[nll] #230 tok 3217: 0.441982 argmax 3217
+ 3217[nll] #231 tok 5330: 0.000125 argmax 5330
+ 5330[nll] #232 tok 64700: 0.803661 argmax 64700
+ 64700[nll] #233 tok 1690: 0.361314 argmax 1690
+ 1690[nll] #234 tok 16515: 0.015994 argmax 16515
+ 16515[nll] #235 tok 15250: 0.260637 argmax 15250
+ 15250[nll] #236 tok 11: 0.285158 argmax 11
+ 11[nll] #237 tok 424: 0.011161 argmax 424
+ 424[nll] #238 tok 45838: 0.035340 argmax 45838
+ 45838[nll] #239 tok 264: 0.001169 argmax 264
+ 264[nll] #240 tok 1510: 0.754756 argmax 1510
+ 1510[nll] #241 tok 11985: 0.011190 argmax 11985
+ 11985[nll] #242 tok 63: 0.012793 argmax 63
+ 63[nll] #243 tok 3018: 0.024162 argmax 3018
+ 3018[nll] #244 tok 383: 0.000307 argmax 383
+ 383[nll] #245 tok 279: 0.110336 argmax 279
+ 279[nll] #246 tok 19152: 0.246081 argmax 19152
+ 19152[nll] #247 tok 1510: 0.868742 argmax 1510
+ 1510[nll] #248 tok 13669: 0.191469 argmax 13669
+ 13669[nll] #249 tok 4790: 0.000821 argmax 4790
+ 4790[nll] #250 tok 33639: 0.071724 argmax 33639
+ 33639[nll] #251 tok 43143: 0.005424 argmax 43143
+ 43143[nll] #252 tok 198: 0.000421 argmax 198
+ 198[nll] #253 tok 262: 0.000854 argmax 262
+ 262[nll] #254 tok 348: 0.000105 argmax 348
+ 348[nll] #255 tok 256: 0.000021 argmax 256
+ 256[nll] #256 tok 2972: 0.029133 argmax 2972
+ 2972[nll] #257 tok 63: 0.783216 argmax 63
+ 63[nll] #258 tok 10686: 0.134620 argmax 10686
+ 10686[nll] #259 tok 84: 0.000065 argmax 84
+ 84[nll] #260 tok 63: 0.478671 argmax 63
+ 63[nll] #261 tok 318: 0.122381 argmax 318
+ 318[nll] #262 tok 78994: 0.004974 argmax 78994
+ 78994[nll] #263 tok 89426: 0.004396 argmax 89426
+ 89426[nll] #264 tok 11851: 0.000302 argmax 11851
+ 11851[nll] #265 tok 188912: 0.002288 argmax 188912
+ 188912[nll] #266 tok 17576: 0.706832 argmax 17576
+ 17576[nll] #267 tok 369: 0.022524 argmax 369
+ 369[nll] #268 tok 279: 0.287967 argmax 279
+ 279[nll] #269 tok 18458: 0.240873 argmax 18458
+ 18458[nll] #270 tok 11304: 0.175462 argmax 11304
+ 11304[nll] #271 tok 1698: 0.394525 argmax 1698
+ 1698[nll] #272 tok 27718: 0.682038 argmax 27718
+ 27718[nll] #273 tok 13153: 0.005741 argmax 13153
+ 13153[nll] #274 tok 92542: 0.003209 argmax 92542
+ 92542[nll] #275 tok 58: 0.083913 argmax 58
+ 58[nll] #276 tok 71376: 0.159664 argmax 71376
+ 71376[nll] #277 tok 816: 0.144872 argmax 816
+ 816[nll] #278 tok 60: 0.001385 argmax 60
+ 60[nll] #279 tok 57208: 0.004025 argmax 57208
+ 57208[nll] #280 tok 26644: 0.688374 argmax 26644
+ 26644[nll] #281 tok 369: 0.772242 argmax 369
+ 369[nll] #282 tok 2577: 0.153534 argmax 2577
+ 2577[nll] #283 tok 13: 0.247754 argmax 13
+ 13[nll] #284 tok 198: 0.000462 argmax 198
+ 198[nll] #285 tok 262: 0.000656 argmax 262
+ 262[nll] #286 tok 348: 0.000048 argmax 348
+ 348[nll] #287 tok 256: 0.000159 argmax 256
+ 256[nll] #288 tok 2972: 0.001808 argmax 2972
+ 2972[nll] #289 tok 63: 0.000795 argmax 63
+ 63[nll] #290 tok 8243: 0.010601 argmax 8243
+ 8243[nll] #291 tok 15745: 0.000181 argmax 15745
+ 15745[nll] #292 tok 43143: 0.017197 argmax 43143
+ 43143[nll] #293 tok 332: 0.002588 argmax 332
+ 332[nll] #294 tok 17576: 0.404724 argmax 17576
+ 17576[nll] #295 tok 369: 0.369833 argmax 369
+ 369[nll] #296 tok 1510: 0.784928 argmax 1510
+ 1510[nll] #297 tok 44967: 0.431164 argmax 44967
+ 44967[nll] #298 tok 348: 0.000530 argmax 348
+ 348[nll] #299 tok 220: 0.000036 argmax 220
+ 220[nll] #300 tok 19: 0.000023 argmax 19
+ 19
+
+decode: 300 tokens in 21.16 s  (14.18 tok/s), n_past=21589
+cached graph replays: 14340; per replay alloc 0 us, launch 16 us, wait 540 us
+step profile: eval 20.62 s = pre 0.17 + graphA 8.03 + CPU MoE 4.28 + io 6.64 + head 0.40 + rest 1.10 | draft head 0.00 s
+replay NLL: 0.1757 per token (ppl 1.19) over 300 tokens
+expert cache: 97.4% hit, 89.0% from VRAM, 26.56 GB from disk
+              tiers: 19556 promotions, 8044 RAM evictions, 0 cold-file reads, 0 upgrades
+              RAM tier at end: 11258 slots = 11157 hot + 0 cold (0 of them hot-worthy) + 101 empty; 1251 prefetched unused, 0 in flight; 0 experts marked hot-worthy
+decode split: graphA(GPU) 8.03 s | MoE gpu 0.05 s (128089 experts, sync-wait 0.00 s) | MoE cpu 4.28 s (15911 experts) | io 6.64 s
+              per expert: gpu 0 us, cpu 269 us  (706.4x)
+              graphA per decode layer: recurrent 531 us (x10800), attention 637 us (x3600) [attention: build+alloc 0 us, gpu 0 us; per-token inputs 200 us]
+prefetch: 79.3% of the next layer's experts predicted correctly | 11019 issued, 8949 used (81.2%), 819 wasted
+prediction by rank, precision %: r1 98 r2 96 r3 94 r4 91 r5 87 r6 81 r7 75 r8 67 r9 56 r10 46 r11 33 r12 25 r13 19 r14 15 r15 12 r16 10
+prediction by margin [edge+) P(correct)% / share%: [0) 36/14.7 [0.05) 35/14.0 [0.1) 39/21.2 [0.2) 50/13.1 [0.3) 71/14.2 [0.5) 91/9.3 [0.75) 97/5.8 [1) 99/5.6 [1.5) 100/1.6 [2) 100/0.4 [3) 36/0.0 [5) 0/0.0
+prediction by layer, worst 10: L1 44 L31 51 L15 57 L47 59 L3 65 L37 73 L36 74 L45 75 L21 76 L2 77  | best: L40 92
+io breakdown: submit 0.06 s, promote 0.07 s, wait 6.50 s | 2681 bursts, 11316 reads, 4.2 reads/burst, 2292 KiB/read
+             wait-only bandwidth: 4.08 GB/s   (device peak measured 7.0 GB/s)
+             io_engine: backend=threads, O_DIRECT=1, 11316 reads, 6.72 GB actually read, prep 0.03 s, io_uring_submit 0.00 s
+engine time: prefill 50.11 s / 21289 tok, decode 20.62 s / 300 tok, expert io 6.64 s
+prefill split: dense graphs 14.87 s | expert reads (blocking) 4.46 s | MoE 16.85 s | warm-up 4.78 s  (of 50.11 s)
+cache warm-up from prefill: 4410 blocks into RAM, 5009 on to VRAM, 4.78 s
+streamed sweeps: 82.85 GB of experts read, 3.93 GB taken from the RAM tier
+wall 83.58 s maxrss 23056716 KB

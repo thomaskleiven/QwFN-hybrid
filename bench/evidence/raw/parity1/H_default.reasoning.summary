@@ -1,0 +1,1 @@
+scenario=reasoning name=H_default tok_s=21.30 NLL=0.4418 hit=98.3 log=bench/evidence/raw/parity1/logs/reasoning.H_default.log

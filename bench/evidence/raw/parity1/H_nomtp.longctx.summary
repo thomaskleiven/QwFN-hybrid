@@ -1,0 +1,1 @@
+scenario=longctx name=H_nomtp tok_s=14.18 NLL=0.1757 hit=97.4 log=bench/evidence/raw/parity1/logs/longctx.H_nomtp.log

@@ -1,0 +1,1 @@
+scenario=reasoning name=B1_r3 tok_s=18.05 NLL=0.4428 hit=98.4 log=$HOME/qwfn/QwFN-hybrid/bench/evidence/raw/final3/logs/reasoning.B1_r3.log

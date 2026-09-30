@@ -1,0 +1,1 @@
+A.*, B1.*, B2.* (plain QwFN, the gate's yardstick) are copied from final3: same QwFN build and token-by-token references, run with --batch 16384. Only C and D were run in final4.

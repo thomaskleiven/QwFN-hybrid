@@ -1,0 +1,46 @@
+[qwfn] direct I/O: 512-byte slots, page-aligned reads through a bounce buffer (slice strides are not page multiples)
+ggml_cuda_init: found 1 CUDA devices (Total VRAM: 15847 MiB):
+  Device 0: NVIDIA GeForce RTX 5060 Ti, compute capability 12.0, VMM: yes, VRAM: 15847 MiB
+[qwfn] mtp: nextn block 48 of $HOME/models/qwen38-flash-next/MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf: 0.10 GB on CUDA0, its 2673 MB of experts in host memory (computed on the CPU per draft)
+[qwfn] CPU threadpool: 5 threads, poll 50, cpus 0-7
+ (pinned)
+[qwfn] decode QSA state: 57.5 MB (pooled block keys for 18432 blocks, 513 kept)
+[qwfn] prefill VRAM (dynamic, lent by the expert tier): 7.66 GB; decode reserve 1153 MB
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 12495.74 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 11991.03 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 11501.90 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 11055.66 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 10625.97 MiB on device 0: cudaMalloc failed: out of memory
+ggml_backend_cuda_buffer_type_alloc_buffer: allocating 10209.24 MiB on device 0: cudaMalloc failed: out of memory
+[qwfn] expert VRAM tier: 9.12 GB, 5431 blocks (22.1%), of which 41 layers (7428 MiB) are handed to the prefill
+[qwfn] expert RAM tier: 18.94 GB arena (pinned), 11258 of 24576 expert blocks (45.8%)
+[qwfn] prefill streamer: host 2 x 1.19 GB (pinned), device 1.19 GB (device, allocated per prefill), 16 MB chunks, read-ahead on
+dense core 3.84271 GB on CUDA0 | state @ 73728 ctx: KV 0.962593 GB (q8_0), indexer 0.226492 GB, deltanet 113.246 MB (constant), conv 4.79232 MB  =>  total 1.30712 GB on the device | expert cache 11258 RAM blocks, 5431 VRAM blocks
+
+prefill: 16384 tokens in 29.35 s  (558.1 tok/s)
+generated: 348 18017 248046 198 248045 74455 198 248068 271 248069 271 71093 10504 198 320 6009 11198 476 2319 4759 1653 84277 1892 1103 21360 11255 1653 3882 6009 9714 364 264 6000 13 198 320 198 320 561 9495 314 279 709 557 3799 974 4937 5304 5430 13 40948 1235 424 25 198 320 198 320 256 680 2470 3764 2515 1174 198 320 333 198 320 198 320 561 2400 709 25 271 972 6009 11198 476 2319 4759 1653 84277 8228 18 17 516 6000 11 1407 476 3112 27 2319 25640 29 594 680 8 713 313 198 262 680 7191 2061 198 262 413 318 10027 2518 39302 4790 2073 2072 460 26 198 262 713 6000 15248 594 18017 283 39302
+
+decode: 128 tokens in 10.11 s  (12.66 tok/s), n_past=16512
+cached graph replays: 3312; per replay alloc 0 us, launch 23 us, wait 673 us
+step profile: eval 9.49 s = pre 0.17 + graphA 2.40 + CPU MoE 2.69 + io 3.85 + head 0.10 + rest 0.27 | draft head 0.51 s
+layer-0 speculation: 141 calls, 0.61 ms each
+head split: dense half 0.18 s | CPU experts + transfers 0.17 s | second half + LM head + argmax 0.09 s
+expert cache: 95.4% hit, 76.8% from VRAM, 22.34 GB from disk
+              tiers: 9964 promotions, 4105 RAM evictions, 0 cold-file reads, 0 upgrades
+              RAM tier at end: 11258 slots = 10869 hot + 0 cold (0 of them hot-worthy) + 389 empty; 1481 prefetched unused, 0 in flight; 0 experts marked hot-worthy
+decode split: graphA(GPU) 2.40 s | MoE gpu 0.01 s (43977 experts, sync-wait 0.00 s) | MoE cpu 2.69 s (13271 experts) | io 3.85 s
+              per expert: gpu 0 us, cpu 202 us  (797.3x)
+              graphA per decode layer: recurrent 673 us (x2556), attention 805 us (x852) [attention: build+alloc 0 us, gpu 0 us; per-token inputs 50 us]
+prefetch: 77.4% of the next layer's experts predicted correctly | 10014 issued, 8147 used (81.4%), 386 wasted
+verify steps by drafts kept: 0:13 1:57  (tokens per step 1.81)
+speculative: 70 pair steps, 57 accepted (81.4%), 1 single steps, 13 rollbacks (0.010 s), head 0.51 s
+prediction by rank, precision %: r1 98 r2 96 r3 93 r4 89 r5 84 r6 78 r7 72 r8 63 r9 55 r10 45 r11 33 r12 26 r13 21 r14 16 r15 14 r16 10
+prediction by margin [edge+) P(correct)% / share%: [0) 35/15.3 [0.05) 35/14.0 [0.1) 40/21.0 [0.2) 49/13.1 [0.3) 68/14.0 [0.5) 89/9.5 [0.75) 96/5.6 [1) 99/5.5 [1.5) 100/1.6 [2) 100/0.4 [3) 100/0.0
+prediction by layer, worst 10: L1 35 L47 65 L3 65 L31 67 L15 67 L39 69 L37 71 L2 72 L36 73 L46 73  | best: L40 88
+io breakdown: submit 0.03 s, promote 0.03 s, wait 3.79 s | 1611 bursts, 7968 reads, 4.9 reads/burst, 2739 KiB/read
+             wait-only bandwidth: 5.89 GB/s   (device peak measured 7.0 GB/s)
+             io_engine: backend=threads, O_DIRECT=1, 7968 reads, 4.65 GB actually read, prep 0.02 s, io_uring_submit 0.00 s
+engine time: prefill 29.07 s / 16384 tok, decode 9.49 s / 141 tok, expert io 3.85 s
+prefill split: dense graphs 10.63 s | expert reads (blocking) 0.27 s | MoE 10.87 s | warm-up 0.48 s  (of 29.07 s)
+cache warm-up from prefill: 2304 blocks into RAM, 2192 on to VRAM, 0.48 s
+streamed sweeps: 43.87 GB of experts read, 0.00 GB taken from the RAM tier

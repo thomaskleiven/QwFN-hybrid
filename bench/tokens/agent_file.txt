@@ -1,0 +1,80 @@
+#pragma once
+// Three-tier routed-expert cache.
+//
+// The model activates 10 of 512 experts on each of 48 layers, so one generated
+// token touches 480 expert blocks -- about 1.05 GB of quantized weights out of
+// a 55.8 GB expert set. At the 15 tok/s target that is ~15.8 GB/s of demand.
+//
+// Nothing holds 55.8 GB here, so the cache is what makes the target reachable:
+//   T0  VRAM   ~4.7 GB free after the dense core, KV and vision  (~2,100 experts)
+//   T1  RAM    ~19 GB                                            (~8,700 experts)
+//   T2  NVMe   everything else, read at slice granularity over io_uring
+//
+// Routing is strongly skewed: a 23 GB page cache over 55.8 GB of experts was
+// measured serving ~94% of activations, so a managed cache with frequency-based
+// admission should do at least as well.
+//
+// Misses may optionally be served from a second, more aggressively quantized
+// checkpoint (UD-IQ1_S): a cold expert then costs ~0.96 MB instead of ~2.18 MB.
+// Quality loss is confined to rarely-routed experts. The handle reports the
+// ggml_type actually obtained so the caller dequantizes correctly.
+
+#include "qwfn_io.h"
+#include "qwfn_model.h"
+
+#include "ggml-backend.h"
+
+#include <cstdint>
+#include <string>
+#include <vector>
+
+namespace qwfn {
+
+struct expert_handle {
+    const uint8_t *       part[EXPERT_NPARTS] = {nullptr, nullptr, nullptr};
+    ggml_type             type[EXPERT_NPARTS] = {GGML_TYPE_F32, GGML_TYPE_F32, GGML_TYPE_F32};
+    // Which buffer `part` points into. The caller attaches this to the graph
+    // tensor, and ggml_backend_sched then places the matmul on that device:
+    // VRAM-resident experts compute on the GPU, RAM-resident ones on the CPU.
+    ggml_backend_buffer_t buffer = nullptr;
+    bool                  on_gpu = false;
+    bool                  from_cold = false;
+    // Slot index inside the tier `part` points into (VRAM tier when on_gpu,
+    // RAM tier otherwise): the expert id a mul_mat_id over that tier wants.
+    int32_t               slot = -1;
+    // Promoted to VRAM by this very fetch: a graph that ran before the fetch
+    // did not see it there, so the caller computes it separately (engine: the
+    // late fold).
+    bool                  late = false;
+};
+
+// One tier of one layer as three expert-major arrays, one per part, so that a
+// single ggml_mul_mat_id over [n_embd, n_ff, n_slots] selects experts by slot.
+// The VRAM tier is laid out this way natively (natural row stride, contiguous);
+// the RAM arena keeps its interleaved gate|up|down blocks and is viewed with a
+// per-slot byte stride, which the CPU kernels address in bytes.
+// One expert's payloads in the RAM tier, for a reader that can take them
+// instead of the file's bytes (the streamed prefill).
+struct ram_slice { uint32_t expert; const uint8_t * part[EXPERT_NPARTS]; };
+
+struct tier_view {
+    uint8_t *             part[EXPERT_NPARTS]   = {nullptr, nullptr, nullptr};   // slot 0 of each part
+    size_t                stride[EXPERT_NPARTS] = {0, 0, 0};                     // slot-to-slot, bytes
+    ggml_type             type[EXPERT_NPARTS]   = {GGML_TYPE_F32, GGML_TYPE_F32, GGML_TYPE_F32};
+    uint32_t              n_slots = 0;
+    ggml_backend_buffer_t buffer  = nullptr;
+};
+
+struct expert_cache_stats {
+    uint64_t lookups = 0, hits = 0, misses = 0;
+    uint64_t bytes_from_disk = 0;
+    uint64_t cold_tier_reads = 0;
+    uint64_t evictions = 0;
+    uint64_t gpu_hits = 0;      // served from the VRAM tier
+    uint64_t promotions = 0;    // blocks copied RAM -> VRAM
+    uint64_t pf_issued  = 0;    // blocks speculatively fetched
+    uint64_t pf_used    = 0;    // of those, later actually requested
+    uint64_t pf_wasted  = 0;    // evicted or replaced before use
+    uint64_t ram_released = 0;  // RAM slots freed once the block reached VRAM
+    uint64_t upgrades   = 0;    // cold blocks refetched at full precision on reuse
+    uint64_t batch_lookups = 0, batch_misses = 0;   // prompt-batch experts served without admission, and the ones read for it

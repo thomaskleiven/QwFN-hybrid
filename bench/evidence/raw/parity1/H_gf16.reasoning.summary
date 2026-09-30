@@ -1,0 +1,1 @@
+scenario=reasoning name=H_gf16 tok_s=20.69 NLL=0.4431 hit=98.3 log=bench/evidence/raw/parity1/logs/reasoning.H_gf16.log

@@ -1,0 +1,1 @@
+scenario=reasoning name=H_parity tok_s=8.82 NLL=0.4416 hit=97.2 log=bench/evidence/raw/parity1/logs/reasoning.H_parity.log

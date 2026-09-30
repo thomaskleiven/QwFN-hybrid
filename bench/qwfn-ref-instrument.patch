@@ -1,0 +1,65 @@
+From 0cfc935f1af3baf5e43c33a73b0a98ae3f6f2f73 Mon Sep 17 00:00:00 2001
+From: QwFN-hybrid <noreply@example.invalid>
+Date: Mon, 28 Sep 2026 21:43:49 +0200
+Subject: [PATCH 1/2] qwfn-gen: print the argmax with per-token NLL
+ (instrumentation only)
+
+---
+ tools/qwfn_gen.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tools/qwfn_gen.cpp b/tools/qwfn_gen.cpp
+index 7d498c1..aaba1a4 100644
+--- a/tools/qwfn_gen.cpp
++++ b/tools/qwfn_gen.cpp
+@@ -168,7 +168,8 @@ int main(int argc, char ** argv) {
+         const double v = -((double) l[tok] - mx - std::log(z));
+         nll_sum += v; nll_n++;
+         static const bool verbose = getenv("QWFN_PPL_VERBOSE") != nullptr;
+-        if (verbose) fprintf(stderr, "[nll] #%d tok %d: %.6f\n", nll_n, tok, v);
++        if (verbose) { int am = 0; for (int64_t k = 1; k < eng.n_vocab(); k++) if (l[k] > l[am]) am = (int) k;
++            fprintf(stderr, "[nll] #%d tok %d: %.6f argmax %d\n", nll_n, tok, v, am); }
+     };
+     const bool use_mtp = !cfg.mtp_path.empty() && !getenv("QWFN_MTP_NOVERIFY");   // NOVERIFY: the head loaded (its VRAM taken) but the plain loop
+     if ((pair_test || rollback_test) && replay.empty()) { fprintf(stderr, "--pair-test / --rollback-test need --replay-file\n"); return 1; }
+-- 
+2.43.0
+
+
+From 4e39dfefa03bedc51d58d838f37eaa3b28fcb12d Mon Sep 17 00:00:00 2001
+From: QwFN-hybrid <noreply@example.invalid>
+Date: Tue, 29 Sep 2026 09:01:20 +0200
+Subject: [PATCH 2/2] qwfn-gen: top-k log-probability dump (instrumentation
+ only)
+
+---
+ tools/qwfn_gen.cpp | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/tools/qwfn_gen.cpp b/tools/qwfn_gen.cpp
+index aaba1a4..b4ab29a 100644
+--- a/tools/qwfn_gen.cpp
++++ b/tools/qwfn_gen.cpp
+@@ -167,6 +167,19 @@ int main(int argc, char ** argv) {
+         double z = 0.0; for (int64_t v = 0; v < eng.n_vocab(); v++) z += std::exp((double) l[v] - mx);
+         const double v = -((double) l[tok] - mx - std::log(z));
+         nll_sum += v; nll_n++;
++        // QWFN_TOPK_DUMP=FILE: the top-K (QWFN_TOPK, default 32) log-probabilities per scored
++        // position, "i id:lp ...", the format tools/llama_nll.cpp --topk writes (for KL).
++        static FILE * topk_f = getenv("QWFN_TOPK_DUMP") ? fopen(getenv("QWFN_TOPK_DUMP"), "w") : nullptr;
++        if (topk_f) {
++            static const int K = getenv("QWFN_TOPK") ? atoi(getenv("QWFN_TOPK")) : 32;
++            static std::vector<int> idx; idx.resize(eng.n_vocab());
++            for (int64_t k = 0; k < eng.n_vocab(); k++) idx[k] = (int) k;
++            std::partial_sort(idx.begin(), idx.begin() + K, idx.end(), [&](int a, int b) { return l[a] > l[b]; });
++            const double lz = mx + std::log(z);
++            fprintf(topk_f, "%d", nll_n - 1);
++            for (int k = 0; k < K; k++) fprintf(topk_f, " %d:%.6f", idx[k], (double) l[idx[k]] - lz);
++            fprintf(topk_f, "\n"); fflush(topk_f);
++        }
+         static const bool verbose = getenv("QWFN_PPL_VERBOSE") != nullptr;
+         if (verbose) { int am = 0; for (int64_t k = 1; k < eng.n_vocab(); k++) if (l[k] > l[am]) am = (int) k;
+             fprintf(stderr, "[nll] #%d tok %d: %.6f argmax %d\n", nll_n, tok, v, am); }
+-- 
+2.43.0
+

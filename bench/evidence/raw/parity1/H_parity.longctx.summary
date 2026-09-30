@@ -1,0 +1,1 @@
+scenario=longctx name=H_parity tok_s=8.40 NLL=0.1778 hit=96.7 log=bench/evidence/raw/parity1/logs/longctx.H_parity.log
