@@ -2,7 +2,7 @@
 
 # QwFN-hybrid
 
-**A 125B mixture-of-experts model at 17-26 tok/s on one 16 GB GPU and 32 GB of RAM.**¹
+**A 125B¹ mixture-of-experts model at 17-26 tok/s on one 16 GB GPU and 32 GB of RAM.**
 
 Local inference for Qwen3.8-Flash-Next (IQ3_XXS). Output checked token by token against llama.cpp.
 
