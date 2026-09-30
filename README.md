@@ -58,24 +58,21 @@ read again. In an OpenCode agentic-coding task, every run solved the bug.
 > ~24 GB of free RAM; less works (smaller `--ram`), more is faster.
 
 ```bash
-# 1. Model (IQ3_XXS shards, 76 GB) and the MTP draft head (2.8 GB)
-hf download unsloth/Qwen3.8-Flash-Next-GGUF --local-dir models \
-  --include "*GSQ-RCO-IQ3_XXS*" "MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf"
+# 1. Model (IQ3_XXS, 2 shards, 76 GB) and the MTP draft head (2.8 GB); -c resumes
+# MODEL_URL: where the GSQ-RCO IQ3_XXS shards are hosted (link to be added)
+mkdir -p models && cd models
+wget -c MODEL_URL/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00001-of-00002.gguf
+wget -c MODEL_URL/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00002-of-00002.gguf
+wget -c https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/main/MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf
+cd ..
 
-# 2. This repo, and ggml/llama.cpp at the validated commit plus one small patch
+# 2. Build (fetches and patches ggml/llama.cpp next to the repo, then builds both)
 git clone https://github.com/thomaskleiven/QwFN-hybrid
-git clone https://github.com/unslothai/llama.cpp && git -C llama.cpp checkout ca1426903
-git -C llama.cpp apply "$PWD"/QwFN-hybrid/patches/*.patch
-cmake -S llama.cpp -B llama.cpp/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DGGML_CUDA=ON
-cmake --build llama.cpp/build -j
+QwFN-hybrid/scripts/build.sh
 
-# 3. Build the engine
-cmake -S QwFN-hybrid -B QwFN-hybrid/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLAMA_CPP_ROOT=$PWD/llama.cpp
-cmake --build QwFN-hybrid/build -j
-
-# 4. Serve an OpenAI- and Anthropic-compatible API on :8080 (pass the first shard)
-QwFN-hybrid/build/qwfn-server models/*GSQ-RCO-IQ3_XXS-00001-of-00002.gguf \
-  --mtp models/MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf \
+# 3. Serve an OpenAI- and Anthropic-compatible API on :8080 (pass only the first shard)
+QwFN-hybrid/build/qwfn-server models/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_XXS-00001-of-00002.gguf \
+  --mtp models/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf \
   --ctx 73728 --kv q8_0 --threads 5 --ram 19 --ram-frac 0.95
 ```
 
