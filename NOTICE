@@ -7,20 +7,16 @@ evidence) is upstream master f955dbf with upstream PRs #10, #12 and #14 merged a
 (bench/qwfn-ref-instrument.patch applies to it). Everything beyond that baseline is this fork's work.
 
 Files modified relative to the baseline (Apache-2.0 section 4(b)):
-  CMakeLists.txt             tool targets added/removed, portable-bundle option removed
-  src/qwfn_engine.cpp/.h     CPU expert path (routed pairs, host reduce), readback pack for every
-                             verify width, late-fold row width fix, session snapshots,
-                             pipelined short-prompt (cbatch) prefill, batched decode-attention
-                             projections, persistent per-step graph contexts, deferred prefetch
-  src/qwfn_graph.cpp/.h      decode attention: batched projections, raw q8_0 K/V gather into
-                             flash attention; contiguous DeltaNet conv concat
-  src/qwfn_expert_cache.cpp/.h  fetch_batch split into begin/end for pipelining
-  src/qwfn_weights.cpp/.h    persistent ggml CPU threadpool (caller affinity preserved)
-  tools/qwfn_gen.cpp         argmax in per-token NLL output, top-k dump, step profile
-  tools/qwfn_server.cpp      saved-sequence store and shared-prefix checkpoints; draft defaults
+  CMakeLists.txt and every file in src/ and tools/ taken from the baseline, except
+  src/qwfn_hparams.h and src/qwfn_vocab.h (unchanged); scripts/nvme_ceiling.py is unchanged. Main changes: CPU expert path (routed
+  pairs, host reduce, persistent threadpool), readback pack for every verify width, session
+  snapshots and shared-prefix checkpoints, pipelined prefill, batched decode-attention
+  projections, raw q8_0 K/V gather into flash attention, deterministic expert placement,
+  deferred prefetch, per-token NLL/top-k output; and a code-quality refactor of all sources
+  (short asserted functions, checked inputs and returns, bounded loops, zero warnings).
 New files:
-  tools/llama_nll.cpp, tools/qwfn_snaptest.cpp, bench/* (incl. make_mtp_q4.sh), docs/PARITY.md,
-  docs/DECISIONS.md
+  src/qwfn_check.h, tools/llama_nll.cpp, tools/qwfn_snaptest.cpp, scripts/build.sh,
+  scripts/check_rules.py, scripts/check_rules.sh, bench/*, docs/*, patches/*
 Removed from upstream: the console, installer/packaging scripts, the Claude Desktop launcher and
   router, the predictor-training and I/O experiment tools, qwfn-run, upstream docs and images.
 

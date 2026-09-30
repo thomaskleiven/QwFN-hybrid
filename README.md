@@ -6,6 +6,9 @@
 
 Local inference for Qwen3.8-Flash-Next (IQ3_XXS). Output checked token by token against llama.cpp.
 
+A fork of [QwFNfer](https://github.com/Apolog1ze-Dev/QwFNfer) (Apache-2.0), extended with the hybrid expert cache,
+MTP verify steps and prompt streaming · built on [ggml/llama.cpp](https://github.com/ggml-org/llama.cpp) · see [NOTICE](NOTICE).
+
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 ![Platform](https://img.shields.io/badge/platform-Linux-lightgrey)
 ![CUDA](https://img.shields.io/badge/GPU-NVIDIA%20CUDA-76B900)
